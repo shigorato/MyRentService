@@ -108,9 +108,10 @@ function OfferPage({ offers, reviews }: OfferProps) {
                   </p>
                 </div>
               </div>
-              <section className="offer__reviews reviews">        
+              <section className="offer__reviews reviews"> 
+              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>       
               <ReviewsList reviews={reviews}/>
-              <CommentSubmissionForm/>
+              <CommentSubmissionForm onSubmit={(review) => console.log(review) }/>
               </section>
             </div>
           </div>
