@@ -46,6 +46,10 @@ export const offers: FullOffer[] = [
     },
     images: [
       '/img/wood-and-stone-place-1.png',
+      '/img/apartment-01.jpg',
+      '/img/apartment-02.jpg',
+      '/img/apartment-03.jpg',
+      '/img/studio-01.jpg',
     ],
     maxAdults: 3
   },
@@ -93,6 +97,10 @@ export const offers: FullOffer[] = [
     },
     images: [
       '/img/cozy-apartment-amsterdam-1.png',
+      '/img/apartment-01.jpg',
+      '/img/apartment-02.jpg',
+      '/img/apartment-03.jpg',
+      '/img/studio-01.jpg',
     ],
     maxAdults: 2
   },
@@ -141,6 +149,10 @@ export const offers: FullOffer[] = [
     },
     images: [
       '/img/luxury-penthouse-berlin-1.png',
+      '/img/apartment-01.jpg',
+      '/img/apartment-02.jpg',
+      '/img/apartment-03.jpg',
+      '/img/studio-01.jpg',
     ],
     maxAdults: 4
   },
@@ -188,6 +200,10 @@ export const offers: FullOffer[] = [
     },
     images: [
       '/img/charming-cottage-copenhagen-1.png',
+      '/img/apartment-01.jpg',
+      '/img/apartment-02.jpg',
+      '/img/apartment-03.jpg',
+      '/img/studio-01.jpg',
     ],
     maxAdults: 3
   }

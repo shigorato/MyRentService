@@ -1,0 +1,74 @@
+.map__container {
+  max-height: 500px;
+  border: 3px dashed #ccc;
+}
+
+.list {
+  display: flex;
+  list-style: none;
+  width: 100%;
+  max-width: 400px;
+}
+
+.list__item {
+  cursor: pointer;
+}
+
+.list__item:hover {
+  color: orangered;
+}
+
+.list__item:not(:last-child) {
+  margin-right: 20px;
+}
+
+.cities {
+  position: relative;
+  z-index: 1;
+}
+
+.map__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; /* Добавляет отступ между списком и картой */
+  width: 100%;
+}
+
+.cities__right-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.map__inner {
+  width: 100%;
+}
+
+/* Для секции offer__map (основной контейнер) */
+.offer__map {
+  max-width: 800px; /* Максимальная ширина контейнера */
+  margin: 0 auto;   /* Центрирование по горизонтали */
+  width: 100%;      /* Занимает всю доступную ширину до max-width */
+}
+
+/* Для контейнера с картой и списком */
+.map__container {
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden; /* Обрезает содержимое за пределами контейнера */
+  box-sizing: border-box; /* Учитывает padding и border в общей ширине */
+  padding: 10px; /* Опционально: внутренние отступы */
+}
+
+/* Для внутреннего контейнера карты */
+.offer-map__inner {
+  position: relative;
+  width: 100%;
+}
+
+
+
+ 
+
+

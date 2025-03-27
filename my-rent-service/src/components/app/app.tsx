@@ -8,14 +8,17 @@ import Offer from "../../pages/offer-page/offer-page";
 import { AppRoute, AuthorizationStatus } from "../../const";
 import { PrivateRoute } from "../private-route/private-route";
 import { FullOffer, OffersList } from "../../types/offer";
+import { Review } from "../../types/reviews";
+
 
 type AppProps = {
   rentalOffersCount: number;
   offers: FullOffer[];
   offersList: OffersList[];
+  reviews: Review[];
 };
 
-function App({ rentalOffersCount, offers, offersList }: AppProps): JSX.Element {
+function App({ rentalOffersCount, offers, offersList,reviews }: AppProps): JSX.Element {
   // Фильтруем только избранные предложения
   const favoriteOffers = offersList.filter((offer) => offer.isFavorite);
 
@@ -24,7 +27,7 @@ function App({ rentalOffersCount, offers, offersList }: AppProps): JSX.Element {
       <Routes>
         <Route path={AppRoute.Main} element={<MainPage rentalOffersCount={rentalOffersCount} offersList={offersList} />} />
         <Route path={AppRoute.Login} element={<LoginPage />} />
-        <Route path={`${AppRoute.Offer}/:id`} element={<Offer offers={offers} />} />
+        <Route path={`${AppRoute.Offer}/:id`} element={<Offer offers={offers} reviews={reviews} />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route
           path={AppRoute.Favorites}

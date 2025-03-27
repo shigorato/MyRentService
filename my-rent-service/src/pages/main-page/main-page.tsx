@@ -1,18 +1,33 @@
-import { JSX } from "react";
+
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import {CitiesCardList} from "../../components/citiesCardList/cities-cardList"
-import {OffersList} from "../../types/offer"
+import { CitiesCardList } from "../../components/citiesCardList/cities-cardList";
+import { OffersList } from "../../types/offer";
+import {Point} from "../../types/map-types"
+import CITY from "../../mocks/city";
+import POINTS from "../../mocks/points";
+import List from "../../list";
+import Map from "../../components/map/map";
 import Header from "../../components/header/header";
 
-type MainPageProps = {
-    rentalOffersCount: number;
-    offersList:OffersList[];
-}
 
-function MainPage({rentalOffersCount,offersList} : MainPageProps): JSX.Element {
-    return(
+
+type MainPageProps = {
+  rentalOffersCount: number;
+  offersList: OffersList[];
+};
+
+function MainPage({ rentalOffersCount, offersList }: MainPageProps) {
+  const [selectedPoint, setSelectedPoint] = useState<Point | null>(null);
+
+  const handleListItemHover = (listItemName: string) => {
+    const currentPoint = POINTS.find((point) => point.title === listItemName);
+    setSelectedPoint(currentPoint || null);
+  };
+
+  return (
     <div className="page page--gray page--main">
-      <Header/>
+      <Header />
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
@@ -56,7 +71,9 @@ function MainPage({rentalOffersCount,offersList} : MainPageProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{rentalOffersCount} places to stay in Amsterdam</b>
+              <b className="places__found">
+                {rentalOffersCount} places to stay in Amsterdam
+              </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -81,17 +98,23 @@ function MainPage({rentalOffersCount,offersList} : MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-              <CitiesCardList offersList={ offersList }/>
-                
+                <CitiesCardList offersList={offersList} />
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" />
+            <h1 className="title__map">Парки города {CITY.title}:</h1>
+              <div className="map__container">
+            <List points={POINTS} onListItemHover={handleListItemHover} />
+            <div className="map__inner">
+              <Map city={CITY} points={POINTS} selectedPoint={selectedPoint} />
+              </div>
+              </div>
             </div>
           </div>
         </div>
       </main>
     </div>
-    );
-    }
- export default MainPage;  
+  );
+}
+
+export default MainPage;
