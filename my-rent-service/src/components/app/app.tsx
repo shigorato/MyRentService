@@ -12,22 +12,20 @@ import { Review } from "../../types/reviews";
 
 
 type AppProps = {
-  rentalOffersCount: number;
   offers: FullOffer[];
   offersList: OffersList[];
   reviews: Review[];
 };
 
-function App({ rentalOffersCount, offers, offersList,reviews }: AppProps): JSX.Element {
+function App({offers, offersList,reviews }: AppProps): JSX.Element {
   // Фильтруем только избранные предложения
   const favoriteOffers = offersList.filter((offer) => offer.isFavorite);
-
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Main} element={<MainPage rentalOffersCount={rentalOffersCount} offersList={offersList} />} />
+        <Route path={AppRoute.Main} element={<MainPage/>} />
         <Route path={AppRoute.Login} element={<LoginPage />} />
-        <Route path={`${AppRoute.Offer}/:id`} element={<Offer offers={offers} reviews={reviews} />} />
+        <Route path={`${AppRoute.Offer}/:id`} element={<Offer offers={offers} reviews={reviews} offersList={offersList} />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route
           path={AppRoute.Favorites}

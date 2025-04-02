@@ -1,54 +1,60 @@
 import { useState } from "react";
-import { FullOffer } from "../../types/offer";
 import { useParams } from "react-router-dom";
-import {Point} from "../../types/map-types"
-import { ReviewsList } from "../../components/reviews__list/reviews__list";
+import { FullOffer, OffersList } from "../../types/offer";
 import { Review } from "../../types/reviews";
-import NearPlaces from "../../components/near-place/near-place";
 import Header from "../../components/header/header";
 import NotFoundPage from "../not-found-page/not-found-page";
-import CITY from "../../mocks/city";
-import POINTS from "../../mocks/points";
-import List from "../../list";
-import Map from "../../components/map/map";
-import CommentSubmissionForm from "../../components/comment-form/comment-form"
+import MapList from "../../components/map-List/map-List";
+import  Map  from "../../components/map/map";
+import CommentSubmissionForm from "../../components/comment-form/comment-form";
+import { CitiesCardList } from "../../components/citiesCardList/cities-cardList";
+import { ReviewsList } from "../../components/reviews__list/reviews__list";
 
-
+// Типы пропсов компонента
 type OfferProps = {
   offers: FullOffer[];
-  reviews:Review[];
+  reviews: Review[];
+  offersList: OffersList[];
 };
 
-function OfferPage({ offers, reviews }: OfferProps) {
+function OfferPage({ offers, reviews, offersList }: OfferProps) {
+  const [selectedPoint, setSelectedPoint] = useState<OffersList | null>(null);
   const params = useParams();
   const offer = offers.find((item) => item.id === params.id);
-  const [selectedPoint, setSelectedPoint] = useState<Point | null>(null); 
-  
-  const handleListItemHover = (listItemName: string) => {
-    const currentPoint = POINTS.find((point) => point.title === listItemName);
+
+  const cityOffers = offer
+    ? offersList.filter((item) => item.city.name === offer.city.name)
+    : [];
+
+  const handleListItemHover = (offerId: string) => {
+    const currentPoint = offersList.find((offer) => offer.title === offerId);
+
     setSelectedPoint(currentPoint || null);
   };
 
-
+  // Если предложение не найдено
   if (!offer) {
     return <NotFoundPage />;
   }
 
-
   return (
     <div className="page">
       <Header />
+      
       <main className="page__main page__main--offer">
         <section className="offer">
+          {/* Галерея изображений */}
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {offer.images.map((item) => (
-                <div key={item} className="offer__image-wrapper">
-                  <img className="offer__image" src={item} alt="Photo studio" />
+              {offer.images.map((image) => (
+                <div key={image} className="offer__image-wrapper">
+                  <img className="offer__image" src={image} alt="Interior photo" />
                 </div>
               ))}
             </div>
           </div>
+
+          {/* Информация о предложении */}
           <div className="offer__container container">
             <div className="offer__wrapper">
               {offer.isPremium && (
@@ -56,33 +62,46 @@ function OfferPage({ offers, reviews }: OfferProps) {
                   <span>Premium</span>
                 </div>
               )}
+
               <div className="offer__name-wrapper">
-                <h1 className="offer__name">Beautiful &amp; {offer.title}</h1>
+                <h1 className="offer__name">{offer.title}</h1>
                 <button className="offer__bookmark-button button" type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use href="/img/sprite.svg#icon-bookmark"></use>
+                    <use href="#icon-bookmark"></use>
                   </svg>
-                  <span className="visually-hidden">To bookmarks</span>
                 </button>
               </div>
+
+              {/* Рейтинг */}
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
                   <span style={{ width: `${(offer.rating / 5) * 100}%` }}></span>
-                  <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">{offer.rating}</span>
+                <span className="offer__rating-value">{offer.rating}</span>
               </div>
+
+              {/* Характеристики */}
               <ul className="offer__features">
-                <li className="offer__feature offer__feature--entire">{offer.type}</li>
-                <li className="offer__feature offer__feature--bedrooms">{offer.bedrooms} Bedrooms</li>
-                <li className="offer__feature offer__feature--adults">Max {offer.maxAdults} adults</li>
+                <li className="offer__feature offer__feature--entire">
+                  {offer.type}
+                </li>
+                <li className="offer__feature offer__feature--bedrooms">
+                  {offer.bedrooms} Bedrooms
+                </li>
+                <li className="offer__feature offer__feature--adults">
+                  Max {offer.maxAdults} adults
+                </li>
               </ul>
+
+              {/* Цена */}
               <div className="offer__price">
-                <b className="offer__price-value">&euro;{offer.price}</b>
+                <b className="offer__price-value">€{offer.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
+
+              {/* Внутренние удобства */}
               <div className="offer__inside">
-                <h2 className="offer__inside-title">What&apos;s inside</h2>
+                <h2 className="offer__inside-title">What's inside</h2>
                 <ul className="offer__inside-list">
                   {offer.goods.map((item) => (
                     <li key={item} className="offer__inside-item">
@@ -91,48 +110,68 @@ function OfferPage({ offers, reviews }: OfferProps) {
                   ))}
                 </ul>
               </div>
+
+              {/* Информация о хосте */}
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
-                  <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="offer__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
+                  <div className={`offer__avatar-wrapper ${offer.host.isPro ? 'offer__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
+                    <img
+                      className="offer__avatar user__avatar"
+                      src={offer.host.avatarUrl}
+                      width="74"
+                      height="74"
+                      alt="Host avatar"
+                    />
                   </div>
                   <span className="offer__user-name">{offer.host.name}</span>
-                  {offer.host.isPro ? <span className="offer__user-status">Pro</span> : null}
+                  {offer.host.isPro && (
+                    <span className="offer__user-status">Pro</span>
+                  )}
                 </div>
                 <div className="offer__description">
                   <p className="offer__text">{offer.description}</p>
-                  <p className="offer__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city
-                    comes to rest in this alley flowery and colorful.
-                  </p>
                 </div>
               </div>
-              <section className="offer__reviews reviews"> 
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>       
-              <ReviewsList reviews={reviews}/>
-              <CommentSubmissionForm onSubmit={(review) => console.log(review) }/>
+
+              {/* Отзывы */}
+              <section className="offer__reviews reviews">
+                <h2 className="reviews__title">
+                  Reviews · <span className="reviews__amount">{reviews.length}</span>
+                </h2>
+                <ReviewsList reviews={reviews} />
+                <CommentSubmissionForm onSubmit={(review) => console.log(review)} />
               </section>
             </div>
           </div>
+
+          {/* Карта */}
           <section className="offer__map map">
-            
-          <h1 className="title__map">Парки города {CITY.title}:</h1>
-              <div className="map__container">
-            <List points={POINTS} onListItemHover={handleListItemHover} />
-            <div className="offer-map__inner">
-              <Map city={CITY} points={POINTS} selectedPoint={selectedPoint} />
+            <h2 className="visually-hidden">Map</h2>
+            <div className="map__container">
+              <MapList 
+                points={cityOffers} 
+                onListItemHover={handleListItemHover} 
+              />
+              <div className="offer-map__inner">
+              <Map 
+                  city={offer.city} 
+                  points={cityOffers} // Передаем полные объекты
+                  selectedPoint={selectedPoint}
+              />
               </div>
             </div>
           </section>
         </section>
+
+        {/* Ближайшие предложения */}
         <div className="container">
           <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
+            <h2 className="near-places__title">
+              Other places in the neighbourhood
+            </h2>
             <div className="near-places__list places__list">
-              <NearPlaces />
-              <NearPlaces />
-              <NearPlaces />
+              <CitiesCardList offersList={ cityOffers } />
             </div>
           </section>
         </div>

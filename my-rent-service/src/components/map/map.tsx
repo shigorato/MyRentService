@@ -1,19 +1,29 @@
-import React, { useRef, useEffect } from 'react';
-import 'leaflet/dist/leaflet.css';
+import {useRef, useEffect, JSX} from 'react';
 import leaflet from 'leaflet';
-import useMap from '../../useMap';
-import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const';
-import { City, Point } from '../../types/map-types';
+import 'leaflet/dist/leaflet.css';
+import useMap from '../../hooks/useMap';
+import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT, CITIES_LOCATION} from '../../const';
+import { OffersList, CityOffer } from '../../types/offer';
 
-interface MapProps {
-  city: City;
-  points: Point[];
-  selectedPoint: Point | null;
-}
+type MapProps = {
+  city: CityOffer;
+  points: OffersList[];
+  selectedPoint: OffersList | null;
+};
 
-const Map: React.FC<MapProps> = ({ city, points, selectedPoint }) => {
-  const mapRef = useRef<HTMLDivElement | null>(null);
-  const map = useMap(mapRef, city);
+function Map({city, points, selectedPoint}: MapProps): JSX.Element {
+  const mapRef = useRef<HTMLDivElement>(null);
+  
+  const cityData = CITIES_LOCATION.find((c) => c.name === city.name);
+  const cityLocation = cityData?.location || city.location;
+
+  const map = useMap({ 
+    mapRef, 
+    city: { 
+      name: city.name, 
+      location: cityLocation 
+    } 
+  });
 
   const defaultCustomIcon = leaflet.icon({
     iconUrl: URL_MARKER_DEFAULT,
@@ -29,26 +39,41 @@ const Map: React.FC<MapProps> = ({ city, points, selectedPoint }) => {
 
   useEffect(() => {
     if (map) {
-      points.forEach((point) => {
+      map.eachLayer((layer) => {
+        if (layer instanceof leaflet.Marker) {
+          map.removeLayer(layer);
+        }
+      });
+
+      map.setView(
+        [cityLocation.latitude, cityLocation.longitude], 
+        cityLocation.zoom
+      );
+
+      points.map((point) => {
         leaflet
           .marker(
             {
-              lat: point.lat,
-              lng: point.lng,
+              lat: point.location.latitude,
+              lng: point.location.longitude,
             },
             {
-              icon:
-                selectedPoint && point.title === selectedPoint.title
-                  ? currentCustomIcon
-                  : defaultCustomIcon,
+              icon: selectedPoint?.id === point.id 
+                ? currentCustomIcon 
+                : defaultCustomIcon,
             }
           )
           .addTo(map);
       });
     }
-  }, [map, points, selectedPoint, currentCustomIcon, defaultCustomIcon]);
+  }, [map, points, selectedPoint, cityLocation, currentCustomIcon, defaultCustomIcon]);
 
-  return <div style={{ height:'400px' }} ref={mapRef}></div>;
-};
+  return (
+    <div
+      ref={mapRef}
+      style={{ height:'350px' }}
+    />
+  );
+}
 
 export default Map;

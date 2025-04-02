@@ -5,7 +5,7 @@ type CitiesCardListProps = {
   offersList: OffersList[];
 };
 
-function CitiesCardList({ offersList }: CitiesCardListProps) {
+function CitiesCardList({ offersList}: CitiesCardListProps) {
   return (
     <div className="cities_places-list places__list tabs__content">
       {offersList.map((item) => (

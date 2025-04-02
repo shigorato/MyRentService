@@ -12,13 +12,13 @@ export const offersList: OffersList[] = [
       location: {
         latitude: 48.85661,
         longitude: 2.351499,
-        zoom: 13
+        zoom: 20
       }
     },
     location: {
-      latitude: 48.868610000000004, // Исправлено с 48.8566100000004
-      longitude: 2.342499,
-      zoom: 16 // Исправлено с 13
+      latitude: 48.85661,
+      longitude: 2.351499,
+      zoom: 20 // Исправлено с 13
     },
     isFavorite: true,
     isPremium: false,
@@ -39,9 +39,9 @@ export const offersList: OffersList[] = [
       }
     },
     location: {
-      latitude: 52.37454, // Исправлено с 48.8566100000004
-      longitude: 4.897976,
-      zoom: 16 // Исправлено с 13
+      latitude: 48.85884,
+      longitude: 2.34703,
+      zoom: 19 // Исправлено с 13
     },
     isFavorite: false, // Исправлено с true
     isPremium: true, // Исправлено с false

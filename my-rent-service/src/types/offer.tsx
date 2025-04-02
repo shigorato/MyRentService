@@ -1,47 +1,60 @@
 type OfferLocation = {
-    latitude: number;
-    longitude: number;
-    zoom: number;
-  };
-  
-  type CityOffer = {
-    name: string;
-    location: OfferLocation;
-  };
-  
-  type HostOffer = {
-    name: string;
-    avatarUrl: string;
-    isPro: boolean;
-  };
+  latitude: number;
+  longitude: number;
+  zoom: number;
+};
 
-  export type OffersList = {
-    id: string;
-    title: string;
-    type: string;
-    price: number;
-    city: CityOffer;
-    location: OfferLocation;
-    isFavorite: boolean;
-    isPremium: boolean;
-    rating: number;
-    previewImage: string;
-  }
-  
-  export type FullOffer = {
-    id: string;
-    title: string;
-    type: string;
-    price: number;
-    city: CityOffer;
-    location: OfferLocation;
-    isFavorite: boolean;
-    isPremium: boolean;
-    rating: number;
-    description: string;
-    bedrooms: number;
-    goods: string[];
-    host: HostOffer;
-    images: string[];
-    maxAdults: number;
-  };
+export type CityOffer = {
+  name: string;
+  location: OfferLocation;
+};
+
+export type OffersList = {
+  id: string;
+  title: string;
+  type: string;
+  price: number;
+  city: CityOffer;
+  location: OfferLocation;
+  isFavorite: boolean;
+  isPremium: boolean;
+  rating: number;
+  previewImage: string;
+}
+
+export type HostOffer = {
+  name: string;
+  avatarUrl: string;
+  isPro: boolean;
+};
+
+export type OfferPreview = {
+  id: string;
+  title: string;
+  type: string;
+  price: number;
+  city: CityOffer;
+  location: OfferLocation;
+  isFavorite: boolean;
+  isPremium: boolean;
+  rating: number;
+  previewImage: string;
+};
+
+export type FullOffer = {
+  id: string;
+  title: string;
+  type: string;
+  price: number;
+  city: CityOffer;
+  location: OfferLocation;
+  isFavorite: boolean;
+  isPremium: boolean;
+  rating: number;
+  description: string;
+  bedrooms: number;
+  goods: string[];
+  host: HostOffer;
+  images: string[];
+  maxAdults: number;
+};
