@@ -10,7 +10,7 @@ import CommentSubmissionForm from "../../components/comment-form/comment-form";
 import { CitiesCardList } from "../../components/citiesCardList/cities-cardList";
 import { ReviewsList } from "../../components/reviews__list/reviews__list";
 
-// Типы пропсов компонента
+
 type OfferProps = {
   offers: FullOffer[];
   reviews: Review[];
@@ -28,11 +28,12 @@ function OfferPage({ offers, reviews, offersList }: OfferProps) {
 
   const handleListItemHover = (offerId: string) => {
     const currentPoint = offersList.find((offer) => offer.title === offerId);
-
+    console.log(currentPoint);
     setSelectedPoint(currentPoint || null);
+    
   };
-
-  // Если предложение не найдено
+  
+  
   if (!offer) {
     return <NotFoundPage />;
   }
@@ -43,7 +44,7 @@ function OfferPage({ offers, reviews, offersList }: OfferProps) {
       
       <main className="page__main page__main--offer">
         <section className="offer">
-          {/* Галерея изображений */}
+         
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
               {offer.images.map((image) => (
@@ -54,7 +55,7 @@ function OfferPage({ offers, reviews, offersList }: OfferProps) {
             </div>
           </div>
 
-          {/* Информация о предложении */}
+          
           <div className="offer__container container">
             <div className="offer__wrapper">
               {offer.isPremium && (
@@ -67,8 +68,9 @@ function OfferPage({ offers, reviews, offersList }: OfferProps) {
                 <h1 className="offer__name">{offer.title}</h1>
                 <button className="offer__bookmark-button button" type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use href="#icon-bookmark"></use>
+                    <use href="/img/sprite.svg#icon-bookmark"></use>
                   </svg>
+                  <span className="visually-hidden">To bookmarks</span>
                 </button>
               </div>
 
@@ -164,7 +166,6 @@ function OfferPage({ offers, reviews, offersList }: OfferProps) {
           </section>
         </section>
 
-        {/* Ближайшие предложения */}
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">
@@ -175,6 +176,7 @@ function OfferPage({ offers, reviews, offersList }: OfferProps) {
             </div>
           </section>
         </div>
+        
       </main>
     </div>
   );

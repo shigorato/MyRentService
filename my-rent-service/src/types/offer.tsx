@@ -6,7 +6,11 @@ type OfferLocation = {
 
 export type CityOffer = {
   name: string;
-  location: OfferLocation;
+  location: {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  };
 };
 
 export type OffersList = {

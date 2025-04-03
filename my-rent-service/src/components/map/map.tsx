@@ -13,7 +13,7 @@ type MapProps = {
 
 function Map({city, points, selectedPoint}: MapProps): JSX.Element {
   const mapRef = useRef<HTMLDivElement>(null);
-  
+  console.log(points);
   const cityData = CITIES_LOCATION.find((c) => c.name === city.name);
   const cityLocation = cityData?.location || city.location;
 

@@ -1,3 +1,4 @@
+import { CityOffer } from './types/offer';
 
 export const CITIES_LOCATION: CityOffer[] = [
   {
@@ -75,22 +76,16 @@ const AuthorizationStatus = {
     Unknow: "UNKNOW",
 } as const;
 
+const NameSpace = {
+  User: 'USER',
+  Offers: 'OFFERS',
+  Review: 'REVIEW'
+} as const;
+
 export const URL_MARKER_DEFAULT =
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
 
 export const URL_MARKER_CURRENT =
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
 
-
-type CityOffer = {
-  name: string;
-  location: {
-    latitude: number;
-    longitude: number;
-    zoom: number;
-  };
-};
-
-
-
-export {Setting,AppRoute,AuthorizationStatus, SortOffersType}; 
+export {Setting,AppRoute,AuthorizationStatus, SortOffersType, NameSpace}; 

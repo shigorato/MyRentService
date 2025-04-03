@@ -43,31 +43,105 @@
   
   .map__inner {
     width: 100%;
+    height: 370px;
   }
   
-  /* Для секции offer__map (основной контейнер) */
-  .offer__map {
-    max-width: 800px; /* Максимальная ширина контейнера */
-    margin: 0 auto;   /* Центрирование по горизонтали */
-    width: 100%;      /* Занимает всю доступную ширину до max-width */
-  }
-  
-  /* Для контейнера с картой и списком */
-  .map__container {
-    max-width: 100%;
-    margin: 0 auto;
-    overflow: hidden; /* Обрезает содержимое за пределами контейнера */
-    box-sizing: border-box; /* Учитывает padding и border в общей ширине */
-    padding: 10px; /* Опционально: внутренние отступы */
-  }
-  
-  /* Для внутреннего контейнера карты */
-  .offer-map__inner {
-    position: relative;
+  /* Секция карты */
+.offer__map.map {
     width: 100%;
+    margin: 0;
+    padding: 0;
   }
   
+  /* Контейнер карты */
+  .map__container {
+    width: 100% !important;
+    max-width: none !important;
+    height: 700px; /* Можно настроить высоту */
+    margin: 0 auto;
+    position: relative;
+  }
   
+  /* Внутренний блок карты */
+  .offer-map__inner {
+    width: 100% !important;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
   
+  .leaflet-container {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  .cities_places-list.places_list.tabs_content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px 20px;
+    width: 100%;
+    padding: 20px 0;
+    margin: 0 auto;
+  }
+  
+  .cities_card.place-card {
+    min-width: 280px;
+    max-width: 400px;
+    height: auto;
+    margin: 0;
+    flex: 1 1 calc(33.333% - 20px);
+    box-sizing: border-box;
+    transition: transform 0.3s ease;
+  }
+
+  /* Принудительно переопределите стили */
+.cities_places-list.places_list.tabs_content {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+}
+  
+  @media (max-width: 1024px) {
+    .cities_places-list.places_list.tabs_content {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .cities_places-list.places_list.tabs_content {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .cities_places-list.places_list.tabs_content {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    
+    .cities_card.place-card {
+      width: 100%;
+      max-width: none;
+    }
+  }
+  
+  .cities_places-list.places__list.tabs__content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-left: -8px;
+    padding-left: 3px;
+  }
   
    

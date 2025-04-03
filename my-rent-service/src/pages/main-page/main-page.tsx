@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { useAppSelector } from "../../hooks";
-import  SortOptions  from "../../components/sorting-options/sorting-options"
-import MapList from "../../components/map-List/map-List";
-import  Map  from "../../components/map/map";
-import Header from "../../components/header/header";
 import { CitiesCardList } from "../../components/citiesCardList/cities-cardList";
 import { CitiesList } from "../../components/citiesList/cities-list";
 import { OffersList } from "../../types/offer";
 import { getOffersByCity, sortOffersByType } from "../../utils";
 import { SortOffer } from "../../types/sort";
+import {MainPageEmpty} from "./main-page-empty"
+import  SortOptions  from "../../components/sorting-options/sorting-options"
+import MapList from "../../components/map-List/map-List";
+import  Map  from "../../components/map/map";
+import Header from "../../components/header/header";
+
+
 
 
 function MainPage() {
@@ -18,7 +21,6 @@ function MainPage() {
   const offersList = useAppSelector((state) => state.offers)
   const selectedcityOffers = getOffersByCity(selectedCity?.name, offersList)
   const rentalOffersCount = selectedcityOffers.length;
- console.log(rentalOffersCount);
   const [selectedOffer, setSelectedOffer] = useState< OffersList | null>(
     null 
   )
@@ -29,6 +31,7 @@ function MainPage() {
     setSelectedOffer(currentOffer || null)
     
   }
+  console.log(selectedcityOffers);
 
   return (
     <div className="page page--gray page--main">
@@ -40,6 +43,7 @@ function MainPage() {
             <CitiesList selectedCity={selectedCity} />
           </section>
         </div>
+        {selectedcityOffers.length === 0 ? <MainPageEmpty /> :
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
@@ -47,11 +51,9 @@ function MainPage() {
               <b className="places__found">
                 {rentalOffersCount } places to stay in {selectedCity?.name}
               </b>
-              <SortOptions activeSorting={activeSort} onChange={(newSorting: any) => setActiveSort(newSorting)}/>
-              <div className="cities__places-list places__list tabs__content">
+              <SortOptions activeSorting={activeSort} onChange={(newSorting: any) => setActiveSort(newSorting)}/> 
                 <CitiesCardList offersList={sortOffersByType(selectedcityOffers, activeSort)} 
-                /> 
-              </div>
+                />           
             </section>
             <div className="cities__right-section-map">
               
@@ -65,7 +67,7 @@ function MainPage() {
               
             </div>
           </div>
-        </div>
+        </div>}
       </main>
     </div>
   );
